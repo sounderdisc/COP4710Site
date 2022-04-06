@@ -99,8 +99,6 @@ function Admin() {
             <br />
 
             <h3>Create a user field by field. It will hash the password for you. See result of post in console.</h3>
-            <input id="id" type="text" defaultValue="admin$testUser"></input>
-            <br />
             <input id="firstName" type="text" defaultValue="first_name"></input>
             <br />
             <input id="lastName" type="text" defaultValue=" last_name"></input>
