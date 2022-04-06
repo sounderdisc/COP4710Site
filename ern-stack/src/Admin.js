@@ -82,7 +82,8 @@ function Admin() {
         var query = document.getElementById("rawQuery").value
         var endpointTwo = document.getElementById("endpointTwoButton").checked
         var urlParam = (endpointTwo ? "http://localhost:5432/mydb?schema=private" : "http://localhost:5432/mydb?schema=private")
-        console.log("endpointTwo: " + endpointTwo + "\nurlParam: " + urlParam + "\n" + query)
+        console.log("endpointTwo: " + endpointTwo + "\nurlParam: " + urlParam)
+        console.log(query)
         axios.post(urlParam, query)
         .then(res => { console.log(res.data) })
     }
@@ -115,12 +116,12 @@ function Admin() {
             <h3>Passes raw query to database. Very dangerous. See results in console.</h3>
             <form action="/action_page.php">
             <input type="radio" id="endpointOneButton" name="endpoint_select" value="endpoint_one"defaultChecked></input>
-            <label htmlFor="endpointOneButton">Query</label> <br />
+            <label htmlFor="endpointOneButton">endpointOne</label> <br />
             <input type="radio" id="endpointTwoButton" name="endpoint_select" value="endpoint_two"></input>
-            <label htmlFor="endpointTwoButton">Transact</label> <br />
+            <label htmlFor="endpointTwoButton">endpointTwo</label> <br />
             </form>
             <br />
-            <textarea id="rawQuery" rows="15" cols="100" defaultValue="insert query here"></textarea>
+            <textarea id="rawQuery" rows="15" cols="100" defaultValue="insert what you want to post to the database here"></textarea>
             <button onClick={sendQuery}>submit</button>
 
         </div>
