@@ -1,0 +1,4 @@
+node_modules
+
+# VSCode settings configuration files
+.vscode
