@@ -1,2 +1,2 @@
-# _ERN Stack Boilerplate
-This is a boilerplate for a _ERN stack [_database_, Express.js, React, Node.js]
+# FLERN Stack Boilerplate
+This is a boilerplate for a FLERN stack [Flur.ee, Express.js, React, Node.js]

@@ -1,0 +1,397 @@
+On the UI at localhost:8080, enable OpenAPI and pass your privatekey.
+
+Create a blank ledger named test/admin-accounts
+
+Use http://localhost:8080/fdb/test/admin-accounts/transact for all Databaste Change requests on Postman using POST
+
+Send this to create your table for accounts
+
+[
+    {
+        "_id" : "_collection",
+        "name" : "admin",
+        "doc" :  "A collection for Admin Accounts",
+        "version" : 1
+    }
+]
+
+[
+    {
+        "_id" : "_collection",
+        "name" : "soldier",
+        "doc" :  "A collection for Soldier Data",
+        "version" : 1
+    }
+]
+[
+    {
+        "_id" : "_collection",
+        "name" : "certifications",
+        "doc" :  "A collection for certification data",
+        "version" : 1
+    }
+]
+Send this to create your columns
+
+[
+    {
+        "_id" :  "_predicate",
+        "name" : "admin/militaryId",
+        "doc" : "The administrator's military Id",
+        "unique" : true,
+        "type" : "string"
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "admin/firstName",
+        "doc" : "The administrator's first name",
+        "type" : "string",
+        "index" : true
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "admin/lastName",
+        "doc" : "The administrator's last name",
+        "type" : "string",
+        "index" : true
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "admin/username",
+        "doc" : "The administrator's username",
+        "type" : "string",
+        "index" : true
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "admin/pwd",
+        "doc" : "The administrator's password",
+        "type" : "string"
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "admin/rank",
+        "doc" : "The administrator's rank",
+        "type" : "int",
+        "index" : true
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "admin/base",
+        "doc" : "The administrator's base Id",
+        "type" : "int",
+        "index" : true
+    }
+]
+
+[
+    {
+        "_id" :  "_predicate",
+        "name" : "soldier/militaryId",
+        "doc" : "The soldier's military Id",
+        "unique" : true,
+        "type" : "string"
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "soldier/firstName",
+        "doc" : "The soldier's first name",
+        "type" : "string",
+        "index" : true
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "soldier/lastName",
+        "doc" : "The soldier's last name",
+        "type" : "string",
+        "index" : true
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "soldier/rank",
+        "doc" : "The soldier's rank",
+        "type" : "int",
+        "index" : true
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "soldier/base",
+        "doc" : "The soldier's base Id",
+        "type" : "int",
+        "index" : true
+    },
+    {
+        "_id" : "_predicate",
+        "name" : "soldier/completedCerts",
+        "doc" : "A list of all certifications that were completed successfully",
+        "type" : "string",
+        "multi" : true,
+        "index" : true
+    },
+    {
+        "_id" : "_predicate",
+        "name" : "soldier/certificationStats",
+        "doc" : "A reference to all statistics relating to this soldier's progress to a certification",
+        "type" : "ref",
+        "multi" : true,
+        "index" : true,
+        "restrictCollection" : "certifications"
+    }
+]
+
+[
+    {
+        "_id" :  "_predicate",
+        "name" : "certifications/militaryId",
+        "doc" : "The soldier's military Id relating to their certifications",
+        "index" : true,
+        "type" : "string"
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "certifications/attemptId",
+        "doc" : "The soldier's attempt for a specific certification",
+        "index" : true,
+        "type" : "int"
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "certifications/score",
+        "doc" : "The soldier's score for a given attempt for a specific certification",
+        "index" : true,
+        "type" : "string"
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "certifications/certification",
+        "doc" : "The specific certification that the data for a given attempt by a soldier relates to",
+        "index" : true,
+        "type" : "string"
+    },
+    {
+        "_id" :  "_predicate",
+        "name" : "certifications/hasPassed",
+        "doc" : "Specifies whether or not this attempt was a pass or fail",
+        "index" : true,
+        "type" : "boolean"
+    }
+]
+Add a test account
+
+[
+    {
+        "_id" : "admin$testUser",
+        "firstName" : "test",
+        "lastName" : "user",
+        "militaryId" : "1",
+        "rank" : 3,
+        "base" : 2,
+        "username" : "123",
+        "pwd" : "456"
+    }
+]
+
+Try a simple query that should return the testUser
+Use http://localhost:8080/fdb/test/admin-accounts/query for all Database Inquiry requests on Postman using POST
+
+{
+  "select": [
+   "*"
+  ],
+  "from": "admin",
+  "where" : "militaryId = \"1\""
+}
+
+Try a simple query that does NOT return the testUser
+
+{
+  "select": [
+   "*"
+  ],
+  "from": "admin",
+  "where" : "militaryId = \"2\""
+}
+
+This is the endpoint that will be utilized for use on our login page
+
+{
+  "select": [
+   "militaryId","pwd"
+  ],
+  "from": "admin",
+  "where" : "username = \"123\""
+}
+
+NOTE: EVERYTHING BELOW, TO BE IMPLEMENTED LATER
+
+Send some sample data for Soldiers
+
+[
+    {
+        "_id" : "soldier$pstone",
+        "firstName" : "Patrick",
+        "lastName" : "Stone",
+        "militaryId" : "1",
+        "rank" : 1,
+        "base" : 1,
+        "completedCerts" : ["Sniper"],
+        "certificationStats" : [387028092977153, 387028092977154]
+    },
+    {
+        "_id" : "soldier$rsaunders",
+        "firstName" : "Robert",
+        "lastName" : "Saunders",
+        "militaryId" : "2",
+        "rank" : 2,
+        "base" : 1,
+        "completedCerts" : ["Medic", "Sniper"],
+        "certificationStats" : [387028092977155, 387028092977156]
+    },
+    {
+        "_id" : "soldier$lwillis",
+        "firstName" : "Lindsey",
+        "lastName" : "Willis",
+        "militaryId" : "3",
+        "rank" : 2,
+        "base" : 1,
+        "completedCerts" : ["Medic"],
+        "certificationStats" : [387028092977157, 387028092977158]
+    },
+    {
+        "_id" : "soldier$janderson",
+        "firstName" : "Jamie",
+        "lastName" : "Anderson",
+        "militaryId" : "4",
+        "rank" : 2,
+        "base" : 3,
+        "completedCerts" : ["Tank"],
+        "certificationStats" : [387028092977159, 387028092977160, 387028092977161]
+    },
+    {
+        "_id" : "soldier$tlinlaw",
+        "firstName" : "Tim",
+        "lastName" : "Kinlaw",
+        "militaryId" : "5",
+        "rank" : 3,
+        "base" : 2,
+        "completedCerts" : ["Sniper", "Medic"],
+        "certificationStats" : [387028092977162, 387028092977163, 387028092977164]
+    },
+    {
+        "_id" : "soldier$ljones",
+        "firstName" : "Lelia",
+        "lastName" : "Jones",
+        "militaryId" : "6",
+        "rank" : 3,
+        "base" : 1,
+        "completedCerts" : ["Sidearm"],
+        "certificationStats" : [387028092977165]
+    }
+]
+
+[
+    {
+        "_id" : "certifications$1",
+        "militaryId" : "1",
+        "attemptId" : 1,
+        "score" : "14/20",
+        "certification" : "Sniper",
+        "hasPassed" : false
+    },
+    {
+        "_id" : "certifications$2",
+        "militaryId" : "1",
+        "attemptId" : 2,
+        "score" : "17/20",
+        "certification" : "Sniper",
+        "hasPassed" : true
+    },
+    {
+        "_id" : "certifications$3",
+        "militaryId" : "2",
+        "attemptId" : 1,
+        "score" : "14/15",
+        "certification" : "Medic",
+        "hasPassed" : true
+    },
+    {
+        "_id" : "certifications$4",
+        "militaryId" : "2",
+        "attemptId" : 1,
+        "score" : "19/20",
+        "certification" : "Sniper",
+        "hasPassed" : true
+    },
+    {
+        "_id" : "certifications$5",
+        "militaryId" : "3",
+        "attemptId" : 1,
+        "score" : "7/15",
+        "certification" : "Medic",
+        "hasPassed" : false
+    },
+    {
+        "_id" : "certifications$6",
+        "militaryId" : "3",
+        "attemptId" : 2,
+        "score" : "13/15",
+        "certification" : "Medic",
+        "hasPassed" : true
+    },
+    {
+        "_id" : "certifications$7",
+        "militaryId" : "4",
+        "attemptId" : 1,
+        "score" : "8/16",
+        "certification" : "Tank",
+        "hasPassed" : false
+    },
+    {
+        "_id" : "certifications$8",
+        "militaryId" : "4",
+        "attemptId" : 2,
+        "score" : "11/16",
+        "certification" : "Tank",
+        "hasPassed" : false
+    },
+    {
+        "_id" : "certifications$9",
+        "militaryId" : "4",
+        "attemptId" : 3,
+        "score" : "16/16",
+        "certification" : "Tank",
+        "hasPassed" : true
+    },
+    {
+        "_id" : "certifications$10",
+        "militaryId" : "5",
+        "attemptId" : 1,
+        "score" : "19/20",
+        "certification" : "Sniper",
+        "hasPassed" : true
+    },
+    {
+        "_id" : "certifications$11",
+        "militaryId" : "5",
+        "attemptId" : 1,
+        "score" : "13/15",
+        "certification" : "Medic",
+        "hasPassed" : true
+    },
+    {
+        "_id" : "certifications$12",
+        "militaryId" : "5",
+        "attemptId" : 1,
+        "score" : "11/16",
+        "certification" : "Tank",
+        "hasPassed" : false
+    },
+    {
+        "_id" : "certifications$13",
+        "militaryId" : "6",
+        "attemptId" : 1,
+        "score" : "21/25",
+        "certification" : "Sidearm",
+        "hasPassed" : true
+    }
+]

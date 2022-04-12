@@ -1,0 +1,6 @@
+# This is specicfically the fluree server jar file. It should not change whatsoever, but
+# is requried to run the project, so we're ingoring it and you can manually include it in
+# after you clone the repo. We are ignoring it because the file is too large for github.
+# go here, download stable version, and take the jar file and put it in this folder.
+# https://flur.ee/getstarted/
+fluree_server.jar
