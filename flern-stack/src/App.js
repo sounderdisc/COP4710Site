@@ -104,7 +104,15 @@ function App() {
             <input id="searchSoldierID" type="text" placeholder="Leave blank to view all soldiers"size="22"></input>
             <button onClick={viewSoldier}>submit</button>
             <br />
-            <p>{data}</p>
+            {Object.entries(viewSoldierData).map(
+                    ([key, value], index) => {
+                        return(
+                            <div key={index}>
+                                <h3>index {index} key {key} value {value}</h3>
+                            </div>
+                        )
+                    }
+                )}
         </div>
     )
 }
