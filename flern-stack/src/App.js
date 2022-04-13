@@ -46,9 +46,18 @@ function App() {
         .then((res) => {
             console.log(res.data)
             var str = JSON.stringify(res.data, null, 2); // spacing level = 2
-            var rmvBrackets = str.slice(2, str.length-2)
-            var words = rmvBrackets.split(",")
-            setUserData(words)
+            str = str.slice(2, str.length-2)
+            str = str.replaceAll("{", "")
+            str = str.replaceAll("}", "")
+            str = str.replaceAll(":", ",")
+            var words = str.split(",")
+            var finalString = words[0]
+            for (let i = 1; i < words.length; i++) {
+                if (i % 2 == 0)
+                    finalString += "\n"
+                finalString += " " + words[i]
+            }
+            setUserData(finalString)
         })
     }
 
@@ -78,15 +87,16 @@ function App() {
             <input id="searchUserID" type="text" placeholder="Leave blank to view all users"size="22"></input>
             <button onClick={viewUser}>submit</button>
             <br />
-            {Object.entries(viewUserData).map(
-                    ([key, value], index) => {
+            {viewUserData}
+            {/* {Object.entries(viewUserData).map(
+                    (value) => {
                         return(
-                            <div key={index}>
-                                <h3>index {index} key {key} value {value}</h3>
+                            <div>
+                                <h3>value {value}</h3>
                             </div>
                         )
                     }
-                )}
+                )} */}
         </div>
     )
 }
