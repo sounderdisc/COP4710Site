@@ -1,2 +1,4 @@
-# FLERN Stack Boilerplate
-This is a boilerplate for a FLERN stack [Flur.ee, Express.js, React, Node.js]
+# FLERN Stack - COP 4710
+This is a FLERN stack [Flur.ee, Express.js, React, Node.js]
+
+This is an mock event planning website for COP 4710

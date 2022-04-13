@@ -3,7 +3,6 @@ import ReactDOM from "react-dom"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import "./index.css"
 import App from "./App"
-import Admin from "./Admin"
 import Login from "./login"
 import reportWebVitals from "./reportWebVitals"
 
@@ -13,7 +12,6 @@ ReactDOM.render(
       <Routes>
         <Route index path="/" element={<Login />}></Route>
         <Route path="/app" element={<App />}></Route>
-        <Route path="/admin" element={<Admin />}></Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

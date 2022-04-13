@@ -13,27 +13,23 @@ function Login() {
     async function verifyLogin() {
         var user = document.getElementById("username").value
         var pw = document.getElementById("password").value
-        axios.post("http://localhost:8080/fdb/test/admin-accounts/query" , {
+        axios.post("http://localhost:8080/fdb/project/backend/query" , {
             "select": [
-             "militaryId","pwd"
+             "username","password"
             ],
-            "from": "admin",
+            "from": "users",
             "where" : `username = "` + user + `"`
           })
           .then(res => {
-                // console.log(res.data)
+                console.log(res.data)
                 if (res.data.length !== 0) {
-                    // expects password to be stored in the database hashed
-                    if (res.data[0].pwd === hash(pw)) navigate("/app", { state: true }) // UNCOMMENT AFTER FINISHING Admin.js
+                    // if (res.data[0].pwd === hash(pw)) navigate("/app", { state: true }) // use if password is stored hashed in the database
+                    if (res.data[0].password === pw) navigate("/app", { state: true }) // use if password is stored as plaintext in the database
                     else console.log("failed")
                 } else {
                     console.log("failed")
                 }
           })
-    }
-
-    async function toAdminPage() {
-        navigate("/admin", { state: true })
     }
 
     return (
@@ -56,7 +52,6 @@ function Login() {
                 </div>
                 <div class='row justify-content-center'>
                     <button class="col-1 m-4 btn btn-outline-dark" onClick={verifyLogin}>Login</button>
-                    <button class='col-1 m-4 btn btn-outline-dark' onClick={toAdminPage}>AdminPage</button> 
                 </div>
             </div>
         </div>
